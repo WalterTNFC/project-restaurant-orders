@@ -1,4 +1,6 @@
 class InventoryControl:
+    inventory = dict
+
     INGREDIENTS = {
         'hamburguer': ['pao', 'carne', 'queijo'],
         'pizza': ['massa', 'queijo', 'molho'],
@@ -16,10 +18,19 @@ class InventoryControl:
     }
 
     def __init__(self):
-        pass
+        self.inventory = {
+            ingredient: 0
+            for ingredient
+            in self.MINIMUM_INVENTORY.keys()
+        }
 
     def add_new_order(self, customer, order, day):
-        pass
+        for i in self.INGREDIENTS[order]:
+            if (self.inventory[i]
+                    < self.MINIMUM_INVENTORY[i]):
+                self.inventory[i] += 1
+            else:
+                return False
 
     def get_quantities_to_buy(self):
-        pass
+        return self.inventory
