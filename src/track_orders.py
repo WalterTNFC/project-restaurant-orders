@@ -17,6 +17,11 @@ class TrackOrders:
     def add_new_order(self, customer, order, day):
         self.data.append([customer, order, day])
 
+        if day not in self.days:
+            self.days[day] = 1
+        else:
+            self.days[day] += 1
+
     def get_most_ordered_dish_per_customer(self, customer):
         count = {}
         for name, product, _ in self.data:
