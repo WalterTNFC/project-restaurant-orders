@@ -25,12 +25,29 @@ class InventoryControl:
         }
 
     def add_new_order(self, customer, order, day):
-        for i in self.INGREDIENTS[order]:
-            if (self.inventory[i]
-                    < self.MINIMUM_INVENTORY[i]):
-                self.inventory[i] += 1
+        ingredients = self.INGREDIENTS
+        inventory = self.inventory
+        minimum = self.MINIMUM_INVENTORY
+
+        for i in ingredients[order]:
+            if (inventory[i] < minimum[i]):
+                inventory[i] += 1
             else:
                 return False
 
     def get_quantities_to_buy(self):
         return self.inventory
+
+    def get_available_dishes(self):
+        ingredients = self.INGREDIENTS
+        inventory = self.inventory
+        minimum = self.MINIMUM_INVENTORY
+        dishes = set(ingredients.keys())
+
+        for i in inventory.keys():
+            if(inventory[i] == minimum[i]):
+                for index, value in ingredients.items():
+                    if i in value:
+                        dishes.discard(index)
+
+        return dishes
